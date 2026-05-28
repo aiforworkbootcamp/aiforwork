@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Level 2 — Build a Better Work Prompt | AI For Work Bootcamp</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:#092E5D;--orange:#F3660C;--charcoal:#2B2F35;
+    --white:#FFFFFF;--off-white:#F7F8FA;--slate:#5E6980;
+    --light-gray:#E1E3E8;--navy-light:#D6E4F0;--orange-light:#FDE8DC;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'DM Sans',sans-serif;background:var(--off-white);color:var(--charcoal);line-height:1.7;-webkit-font-smoothing:antialiased}
+  .progress-bar{background:var(--navy);padding:12px 24px;display:flex;align-items:center;gap:8px;justify-content:center}
+  .progress-step{width:28px;height:6px;border-radius:3px;background:rgba(255,255,255,0.2)}
+  .progress-step.active{background:var(--orange)}
+  .progress-step.done{background:rgba(255,255,255,0.5)}
+  .progress-label{font-size:11px;color:rgba(255,255,255,0.5);letter-spacing:.08em;margin-left:8px}
+  .hero{background:var(--navy);padding:48px 24px 44px;text-align:center;position:relative;overflow:hidden}
+  .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 50% 0%,rgba(243,102,12,.15) 0%,transparent 70%);pointer-events:none}
+  .level-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(243,102,12,.15);border:1px solid rgba(243,102,12,.35);color:var(--orange);font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:6px 16px;border-radius:20px;margin-bottom:20px}
+  .level-badge-dot{width:6px;height:6px;background:var(--orange);border-radius:50%}
+  .hero h1{font-family:'DM Serif Display',serif;font-size:clamp(24px,5.5vw,40px);color:var(--white);line-height:1.2;margin-bottom:12px}
+  .hero-sub{font-size:15px;color:rgba(255,255,255,.55);max-width:480px;margin:0 auto;line-height:1.65}
+  .outcome-banner{background:var(--orange);padding:14px 24px;text-align:center;font-size:13px;font-weight:600;color:var(--white);letter-spacing:.01em}
+  .outcome-banner span{opacity:.75;font-weight:400;margin-right:6px}
+  .page-wrap{padding:24px 16px 0}
+  .section{background:var(--white);border-radius:12px;padding:36px 32px;max-width:680px;margin:0 auto 16px;box-shadow:0 1px 3px rgba(9,46,93,.06),0 4px 16px rgba(9,46,93,.04)}
+  .section-label{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--orange);margin-bottom:10px}
+  .section h2{font-family:'DM Serif Display',serif;font-size:22px;color:var(--navy);margin-bottom:14px;line-height:1.3}
+  .section p{font-size:15px;color:var(--slate);margin-bottom:12px;line-height:1.75}
+  .section p:last-child{margin-bottom:0}
+  .section p strong{color:var(--charcoal);font-weight:600}
+  .example-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}
+  @media(max-width:480px){.example-grid{grid-template-columns:1fr}}
+  .example-card{background:var(--off-white);border:1px solid var(--light-gray);border-radius:8px;padding:14px 16px;font-size:13px;color:var(--slate);line-height:1.55;transition:border-color .2s}
+  .example-card:hover{border-color:var(--orange)}
+  .example-card-label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--orange);margin-bottom:6px}
+  .example-card-text{color:var(--charcoal);font-weight:500;font-size:13px;line-height:1.55}
+  .highlight-box{background:var(--navy-light);border-left:4px solid var(--navy);border-radius:0 8px 8px 0;padding:16px 20px;margin:16px 0;font-size:14px;color:var(--navy);line-height:1.7}
+  .activity-section{background:var(--navy);border-radius:12px;padding:36px 32px;max-width:680px;margin:0 auto 16px;position:relative;overflow:hidden}
+  .activity-section::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 50% at 50% 100%,rgba(243,102,12,.12) 0%,transparent 70%);pointer-events:none}
+  .activity-label{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--orange);margin-bottom:10px}
+  .activity-section h2{font-family:'DM Serif Display',serif;font-size:22px;color:var(--white);margin-bottom:12px}
+  .activity-section p{font-size:14px;color:rgba(255,255,255,.65);line-height:1.75;margin-bottom:10px}
+  .activity-steps{list-style:none;display:flex;flex-direction:column;gap:12px;margin:20px 0 24px}
+  .activity-step{display:flex;gap:14px;align-items:flex-start}
+  .activity-step-num{flex-shrink:0;width:28px;height:28px;background:var(--orange);color:var(--white);font-size:13px;font-weight:700;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-top:1px}
+  .activity-step-text{font-size:14px;color:rgba(255,255,255,.85);line-height:1.65;padding-top:3px}
+  .activity-step-text strong{color:var(--white);font-weight:600}
+  .form-placeholder{background:rgba(255,255,255,.07);border:2px dashed rgba(255,255,255,.2);border-radius:10px;padding:32px 24px;text-align:center;margin:8px 0 0}
+  .form-placeholder-icon{font-size:28px;margin-bottom:10px}
+  .form-placeholder-text{font-size:14px;color:rgba(255,255,255,.5);line-height:1.6;font-style:italic}
+  .form-placeholder-note{font-size:11px;color:rgba(255,255,255,.3);margin-top:8px;letter-spacing:.05em}
+  .nav-section{max-width:680px;margin:0 auto 32px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 4px}
+  .nav-back{font-size:13px;color:var(--slate);text-decoration:none;display:flex;align-items:center;gap:6px;padding:10px 16px;border:1px solid var(--light-gray);border-radius:8px;background:var(--white);transition:border-color .2s,color .2s}
+  .nav-back:hover{border-color:var(--navy);color:var(--navy)}
+  .nav-next{display:inline-flex;align-items:center;gap:8px;background:var(--orange);color:var(--white);font-size:14px;font-weight:700;padding:12px 28px;border-radius:8px;text-decoration:none;box-shadow:0 4px 16px rgba(243,102,12,.3);transition:background .2s,transform .15s,box-shadow .2s}
+  .nav-next:hover{background:#d4560a;transform:translateY(-1px);box-shadow:0 6px 24px rgba(243,102,12,.4)}
+  .nav-next-note{font-size:11px;color:var(--slate);text-align:right;margin-top:6px;font-style:italic}
+  .support-strip{max-width:680px;margin:0 auto 32px;text-align:center;font-size:13px;color:var(--slate)}
+  .support-strip a{color:var(--orange);text-decoration:underline;text-underline-offset:3px}
+  .privacy-strip{max-width:680px;margin:0 auto 40px;background:var(--navy-light);border-left:4px solid var(--navy);border-radius:0 8px 8px 0;padding:12px 18px;font-size:12px;color:var(--navy);font-style:italic;line-height:1.6}
+  .founder-note{background:#fff8f5;border:2px dashed var(--orange);border-radius:12px;padding:28px;max-width:680px;margin:0 auto 32px}
+  .founder-note-title{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--orange);margin-bottom:16px}
+  .founder-note h3{font-size:14px;font-weight:700;color:var(--navy);margin:16px 0 6px}
+  .founder-note h3:first-of-type{margin-top:0}
+  .founder-note p,.founder-note li{font-size:13px;color:var(--slate);line-height:1.7}
+  .founder-note ol{padding-left:18px;display:flex;flex-direction:column;gap:6px}
+  .founder-note .warn{margin-top:16px;padding:10px 14px;background:var(--orange);color:var(--white);font-size:13px;font-weight:600;border-radius:6px}
+  .divider{height:1px;background:var(--light-gray);margin:20px 0}
+  @media(max-width:480px){.section{padding:28px 20px}.activity-section{padding:28px 20px}.hero{padding:40px 20px 36px}.nav-section{flex-direction:column;align-items:stretch}.nav-back,.nav-next{text-align:center;justify-content:center}.nav-next-note{text-align:center}}
+</style>
+</head>
+<body>
+
+<div class="progress-bar">
+  <div class="progress-step done"></div>
+  <div class="progress-step active"></div>
+  <div class="progress-step "></div>
+  <div class="progress-step "></div>
+  <div class="progress-step "></div>
+  <span class="progress-label">Level 2 of 5</span>
+</div>
+
+<div class="hero">
+  <div class="level-badge"><div class="level-badge-dot"></div>Level 2</div>
+  <h1>Build a Better Work Prompt</h1>
+  <div class="hero-sub">Most people type vague questions into AI and get vague answers back. This level fixes that.</div>
+</div>
+
+<div class="outcome-banner">
+  <span>What you will have by the end:</span>One starter AI message written using the GOAL framework
+</div>
+
+<div class="page-wrap">
+
+<div class="section">
+    <div class="section-label">The lesson</div>
+    <h2>Why your message to AI matters</h2>
+    <p>AI tools do not read your mind. They respond to exactly what you give them. A vague message gets a vague response. A clear, structured message gets something you can actually use.</p>
+    <p>Most beginners type something like: <em>"Help me with my emails."</em> That gives AI almost nothing to work with. Compare that to: <em>"I need to write a follow-up email to a client after our meeting today. The tone should be professional but warm. Keep it under 150 words."</em></p>
+    <p>The second message gives AI a task, a context, a tone, and a constraint. That is the difference between a useful response and a generic one.</p>
+</div>
+
+<div class="section">
+    <div class="section-label">The framework</div>
+    <h2>The GOAL message framework</h2>
+    <p>GOAL is a simple four-part structure for writing clear AI messages. You do not need to use every part every time — but knowing all four helps you build better messages faster.</p>
+<div class="example-grid"><div class="example-card">
+          <div class="example-card-label">G — Goal</div>
+          <div class="example-card-text"><strong>What do you want AI to do?</strong><br><span style="color:#5E6980;font-size:12px">e.g. Draft, summarise, explain, create, organise, rewrite...</span></div>
+        </div><div class="example-card">
+          <div class="example-card-label">O — Output</div>
+          <div class="example-card-text"><strong>What should the result look like?</strong><br><span style="color:#5E6980;font-size:12px">e.g. An email, a bullet list, a short paragraph, a table...</span></div>
+        </div><div class="example-card">
+          <div class="example-card-label">A — Audience / Context</div>
+          <div class="example-card-text"><strong>Who is this for or what is the situation?</strong><br><span style="color:#5E6980;font-size:12px">e.g. A client, a colleague, a job application, a weekly report...</span></div>
+        </div><div class="example-card">
+          <div class="example-card-label">L — Limits</div>
+          <div class="example-card-text"><strong>Any constraints on the response?</strong><br><span style="color:#5E6980;font-size:12px">e.g. Under 150 words, professional tone, no jargon, use UK spelling...</span></div>
+        </div></div></div>
+
+<div class="section">
+    <div class="section-label">Putting it together</div>
+    <h2>What a GOAL message looks like</h2>
+    <p>Here is the same task written without and with the GOAL framework:</p>
+<div style="display:flex;flex-direction:column;gap:10px;margin:14px 0">
+      <div class="example-card" style="border-left:3px solid #E1E3E8">
+        <div class="example-card-label" style="color:#5E6980">Without GOAL</div>
+        <div class="example-card-text">"Help me with my emails."</div>
+      </div>
+      <div class="example-card" style="border-left:3px solid #F3660C">
+        <div class="example-card-label">With GOAL</div>
+        <div class="example-card-text">"Draft a follow-up email to a client after our project kick-off meeting today. It should be professional but warm in tone. Keep it under 150 words and end with a clear next step."</div>
+      </div>
+    </div></div>
+
+<div class="section">
+    <div class="section-label">What to know</div>
+    <h2>A few things to keep in mind</h2>
+    <p><strong>AI is not a search engine.</strong> You are not looking up a fact — you are giving it a task. The more specific your task, the better the result.</p>
+    <p><strong>You can always adjust.</strong> If the first response is not quite right, add more detail or change one part of your message. AI works through conversation, not single questions.</p>
+    <p><strong>Check what it gives you.</strong> Even a well-written message can produce an imperfect response. You will learn how to check responses properly in Level 3.</p>
+</div>
+
+
+<div class="activity-section">
+    <div class="activity-label">Your Level 2 activity</div>
+    <h2>Write your first GOAL message</h2>
+    <p>Use the task you identified in Level 1 to write your first structured AI message. Follow the steps below, then submit it using the activity form.</p>
+    <ol class="activity-steps">
+      <li class="activity-step">
+        <div class="activity-step-num">1</div>
+        <div class="activity-step-text"><strong>Take out your Level 1 task</strong><br>The task you identified in Level 1 — the repetitive, word-based work task. That is what you are building a message for.</div>
+      </li><li class="activity-step">
+        <div class="activity-step-num">2</div>
+        <div class="activity-step-text"><strong>Write your GOAL message</strong><br>Use the four parts: what is your <strong>Goal</strong>, what is the <strong>Output</strong> you want, what is the <strong>Audience or context</strong>, and what <strong>Limits</strong> apply (length, tone, format)?</div>
+      </li><li class="activity-step">
+        <div class="activity-step-num">3</div>
+        <div class="activity-step-text"><strong>Test it</strong><br>Paste your message into a free AI tool — ChatGPT (chat.openai.com) or Claude (claude.ai). See what comes back.</div>
+      </li><li class="activity-step">
+        <div class="activity-step-num">4</div>
+        <div class="activity-step-text"><strong>Submit your message</strong><br>Paste your GOAL message into the activity form below. You do not need to submit the AI response — just the message you wrote.</div>
+      </li>
+    </ol>
+    <div class="form-placeholder">
+      <div class="form-placeholder-icon">📋</div>
+      <div class="form-placeholder-text">The Level 2 activity form will appear here.<br>Check back shortly — it is being set up.</div>
+      <div class="form-placeholder-note">[TALLY LEVEL 2 FORM LINK — replace when form is built]</div>
+    </div>
+  </div>
+
+<div class="nav-section">
+    <a href="https://aiforworkbootcamp.github.io/aiforwork/level1.html" class="nav-back">← Back to Level 1</a>
+    <div>
+      <a href="https://aiforworkbootcamp.github.io/aiforwork/level3.html" class="nav-next">Level 3 — Research Without Blind Trust →</a>
+      <div class="nav-next-note">Complete the activity above to continue</div>
+    </div>
+  </div>
+<div class="support-strip">Got stuck on this level? <a href="[SUPPORT FORM LINK]">Use the support form</a></div>
+<div class="privacy-strip">This is a beta project. Your responses, including any work examples or workflow you submit, will be reviewed by the course founder to improve the course and will not be shared outside this project.</div>
+<div class="founder-note">
+    <div class="founder-note-title">⚠ For Founder Use Only — Delete This Section Before Going Live</div>
+
+    <h3>Your live URL for this page</h3>
+    <p><strong>https://aiforworkbootcamp.github.io/aiforwork/level2.html</strong></p>
+
+    <h3>How to upload this page to GitHub</h3>
+    <ol>
+      <li>Go to github.com and log in as aiforworkbootcamp.</li>
+      <li>Click on the aiforwork repository.</li>
+      <li>Click Add file → Upload files.</li>
+      <li>Upload this file (level2.html).</li>
+      <li>Click Commit changes.</li>
+    </ol>
+
+    <h3>How to link this page from Systeme.io</h3>
+    <ol>
+      <li>In your course, create a new lecture called: Level 2 — Build a Better Work Prompt.</li>
+      <li>Add a button element with the text: Open Level 2 →</li>
+      <li>Link the button to: https://aiforworkbootcamp.github.io/aiforwork/level2.html</li>
+      <li>Set the button to open in a new tab.</li>
+      <li>Save. Keep in draft mode until all levels are ready.</li>
+    </ol>
+
+    <h3>Things to fill in before going live</h3>
+    <ol>
+      <li>Replace <code>[TALLY LEVEL 2 FORM LINK — replace when form is built]</code> with the actual Tally form URL once the Level 2 activity form is built.</li><li>Replace [SUPPORT FORM LINK] with the actual Tally support form URL once built.</li><li>Delete this entire Founder Note section before the beta goes live.</li>
+    </ol>
+
+    <h3>Also update Level 1</h3>
+    <ol>
+      <li>Open level1.html in CotEditor.</li>
+      <li>Find [TALLY LEVEL 1 FORM LINK] and replace it with the actual Tally form URL when built.</li>
+      <li>Re-upload level1.html to GitHub.</li>
+    </ol>
+
+    <div class="warn">Do not share this page with beta participants until all placeholders are replaced and this section is deleted.</div>
+  </div>
+
+</div>
+</body>
+</html>

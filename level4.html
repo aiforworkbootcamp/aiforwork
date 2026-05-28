@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Level 4 — Map a Workflow AI Can Help With | AI For Work Bootcamp</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:#092E5D;--orange:#F3660C;--charcoal:#2B2F35;
+    --white:#FFFFFF;--off-white:#F7F8FA;--slate:#5E6980;
+    --light-gray:#E1E3E8;--navy-light:#D6E4F0;--orange-light:#FDE8DC;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'DM Sans',sans-serif;background:var(--off-white);color:var(--charcoal);line-height:1.7;-webkit-font-smoothing:antialiased}
+  .progress-bar{background:var(--navy);padding:12px 24px;display:flex;align-items:center;gap:8px;justify-content:center}
+  .progress-step{width:28px;height:6px;border-radius:3px;background:rgba(255,255,255,0.2)}
+  .progress-step.active{background:var(--orange)}
+  .progress-step.done{background:rgba(255,255,255,0.5)}
+  .progress-label{font-size:11px;color:rgba(255,255,255,0.5);letter-spacing:.08em;margin-left:8px}
+  .hero{background:var(--navy);padding:48px 24px 44px;text-align:center;position:relative;overflow:hidden}
+  .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 50% 0%,rgba(243,102,12,.15) 0%,transparent 70%);pointer-events:none}
+  .level-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(243,102,12,.15);border:1px solid rgba(243,102,12,.35);color:var(--orange);font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:6px 16px;border-radius:20px;margin-bottom:20px}
+  .level-badge-dot{width:6px;height:6px;background:var(--orange);border-radius:50%}
+  .hero h1{font-family:'DM Serif Display',serif;font-size:clamp(24px,5.5vw,40px);color:var(--white);line-height:1.2;margin-bottom:12px}
+  .hero-sub{font-size:15px;color:rgba(255,255,255,.55);max-width:480px;margin:0 auto;line-height:1.65}
+  .outcome-banner{background:var(--orange);padding:14px 24px;text-align:center;font-size:13px;font-weight:600;color:var(--white);letter-spacing:.01em}
+  .outcome-banner span{opacity:.75;font-weight:400;margin-right:6px}
+  .page-wrap{padding:24px 16px 0}
+  .section{background:var(--white);border-radius:12px;padding:36px 32px;max-width:680px;margin:0 auto 16px;box-shadow:0 1px 3px rgba(9,46,93,.06),0 4px 16px rgba(9,46,93,.04)}
+  .section-label{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--orange);margin-bottom:10px}
+  .section h2{font-family:'DM Serif Display',serif;font-size:22px;color:var(--navy);margin-bottom:14px;line-height:1.3}
+  .section p{font-size:15px;color:var(--slate);margin-bottom:12px;line-height:1.75}
+  .section p:last-child{margin-bottom:0}
+  .section p strong{color:var(--charcoal);font-weight:600}
+  .example-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}
+  @media(max-width:480px){.example-grid{grid-template-columns:1fr}}
+  .example-card{background:var(--off-white);border:1px solid var(--light-gray);border-radius:8px;padding:14px 16px;font-size:13px;color:var(--slate);line-height:1.55;transition:border-color .2s}
+  .example-card:hover{border-color:var(--orange)}
+  .example-card-label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--orange);margin-bottom:6px}
+  .example-card-text{color:var(--charcoal);font-weight:500;font-size:13px;line-height:1.55}
+  .highlight-box{background:var(--navy-light);border-left:4px solid var(--navy);border-radius:0 8px 8px 0;padding:16px 20px;margin:16px 0;font-size:14px;color:var(--navy);line-height:1.7}
+  .activity-section{background:var(--navy);border-radius:12px;padding:36px 32px;max-width:680px;margin:0 auto 16px;position:relative;overflow:hidden}
+  .activity-section::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 50% at 50% 100%,rgba(243,102,12,.12) 0%,transparent 70%);pointer-events:none}
+  .activity-label{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--orange);margin-bottom:10px}
+  .activity-section h2{font-family:'DM Serif Display',serif;font-size:22px;color:var(--white);margin-bottom:12px}
+  .activity-section p{font-size:14px;color:rgba(255,255,255,.65);line-height:1.75;margin-bottom:10px}
+  .activity-steps{list-style:none;display:flex;flex-direction:column;gap:12px;margin:20px 0 24px}
+  .activity-step{display:flex;gap:14px;align-items:flex-start}
+  .activity-step-num{flex-shrink:0;width:28px;height:28px;background:var(--orange);color:var(--white);font-size:13px;font-weight:700;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-top:1px}
+  .activity-step-text{font-size:14px;color:rgba(255,255,255,.85);line-height:1.65;padding-top:3px}
+  .activity-step-text strong{color:var(--white);font-weight:600}
+  .form-placeholder{background:rgba(255,255,255,.07);border:2px dashed rgba(255,255,255,.2);border-radius:10px;padding:32px 24px;text-align:center;margin:8px 0 0}
+  .form-placeholder-icon{font-size:28px;margin-bottom:10px}
+  .form-placeholder-text{font-size:14px;color:rgba(255,255,255,.5);line-height:1.6;font-style:italic}
+  .form-placeholder-note{font-size:11px;color:rgba(255,255,255,.3);margin-top:8px;letter-spacing:.05em}
+  .nav-section{max-width:680px;margin:0 auto 32px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 4px}
+  .nav-back{font-size:13px;color:var(--slate);text-decoration:none;display:flex;align-items:center;gap:6px;padding:10px 16px;border:1px solid var(--light-gray);border-radius:8px;background:var(--white);transition:border-color .2s,color .2s}
+  .nav-back:hover{border-color:var(--navy);color:var(--navy)}
+  .nav-next{display:inline-flex;align-items:center;gap:8px;background:var(--orange);color:var(--white);font-size:14px;font-weight:700;padding:12px 28px;border-radius:8px;text-decoration:none;box-shadow:0 4px 16px rgba(243,102,12,.3);transition:background .2s,transform .15s,box-shadow .2s}
+  .nav-next:hover{background:#d4560a;transform:translateY(-1px);box-shadow:0 6px 24px rgba(243,102,12,.4)}
+  .nav-next-note{font-size:11px;color:var(--slate);text-align:right;margin-top:6px;font-style:italic}
+  .support-strip{max-width:680px;margin:0 auto 32px;text-align:center;font-size:13px;color:var(--slate)}
+  .support-strip a{color:var(--orange);text-decoration:underline;text-underline-offset:3px}
+  .privacy-strip{max-width:680px;margin:0 auto 40px;background:var(--navy-light);border-left:4px solid var(--navy);border-radius:0 8px 8px 0;padding:12px 18px;font-size:12px;color:var(--navy);font-style:italic;line-height:1.6}
+  .founder-note{background:#fff8f5;border:2px dashed var(--orange);border-radius:12px;padding:28px;max-width:680px;margin:0 auto 32px}
+  .founder-note-title{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--orange);margin-bottom:16px}
+  .founder-note h3{font-size:14px;font-weight:700;color:var(--navy);margin:16px 0 6px}
+  .founder-note h3:first-of-type{margin-top:0}
+  .founder-note p,.founder-note li{font-size:13px;color:var(--slate);line-height:1.7}
+  .founder-note ol{padding-left:18px;display:flex;flex-direction:column;gap:6px}
+  .founder-note .warn{margin-top:16px;padding:10px 14px;background:var(--orange);color:var(--white);font-size:13px;font-weight:600;border-radius:6px}
+  .divider{height:1px;background:var(--light-gray);margin:20px 0}
+  @media(max-width:480px){.section{padding:28px 20px}.activity-section{padding:28px 20px}.hero{padding:40px 20px 36px}.nav-section{flex-direction:column;align-items:stretch}.nav-back,.nav-next{text-align:center;justify-content:center}.nav-next-note{text-align:center}}
+</style>
+</head>
+<body>
+
+<div class="progress-bar">
+  <div class="progress-step done"></div>
+  <div class="progress-step done"></div>
+  <div class="progress-step done"></div>
+  <div class="progress-step active"></div>
+  <div class="progress-step "></div>
+  <span class="progress-label">Level 4 of 5</span>
+</div>
+
+<div class="hero">
+  <div class="level-badge"><div class="level-badge-dot"></div>Level 4</div>
+  <h1>Map a Workflow AI Can Help With</h1>
+  <div class="hero-sub">AI works best inside a clear process. This level helps you map the steps of a real task so AI fits into your actual work.</div>
+</div>
+
+<div class="outcome-banner">
+  <span>What you will have by the end:</span>One mapped workflow showing where AI fits into a real task
+</div>
+
+<div class="page-wrap">
+
+<div class="section">
+    <div class="section-label">The lesson</div>
+    <h2>Why workflows matter</h2>
+    <p>Using AI for a one-off task is useful. Using AI inside a repeatable workflow is where the real time savings come from.</p>
+    <p>A workflow is just the sequence of steps you take to complete a task. Most work tasks already have a workflow — you just do it without thinking about it. This level makes that workflow visible so you can see exactly where AI fits.</p>
+    <p>The goal is not to hand the whole task to AI. The goal is to identify the one or two steps inside the task where AI genuinely helps — and build a consistent habit around those steps.</p>
+</div>
+
+<div class="section">
+    <div class="section-label">How to map a workflow</div>
+    <h2>Breaking a task into steps</h2>
+    <p>Take the task you identified in Level 1. Think about everything you do from start to finish to complete that task. Write each step down.</p>
+    <p>Most tasks have between three and eight steps when you break them down. Here is an example:</p>
+<div style="display:flex;flex-direction:column;gap:8px;margin:14px 0"><div style="display:flex;align-items:center;gap:12px;background:#F7F8FA;border:1px solid #E1E3E8;border-radius:8px;padding:12px 16px">
+          <div style="flex-shrink:0;font-size:11px;font-weight:700;color:#5E6980;width:100px">Start</div>
+          <div style="font-size:13px;color:#2B2F35">Client meeting happens</div>
+        </div><div style="display:flex;align-items:center;gap:12px;background:#F7F8FA;border:1px solid #E1E3E8;border-radius:8px;padding:12px 16px">
+          <div style="flex-shrink:0;font-size:11px;font-weight:700;color:#5E6980;width:100px">Step 1</div>
+          <div style="font-size:13px;color:#2B2F35">Review notes from the meeting</div>
+        </div><div style="display:flex;align-items:center;gap:12px;background:#FDE8DC;border:1px solid #F3660C;border-radius:8px;padding:12px 16px">
+          <div style="flex-shrink:0;font-size:11px;font-weight:700;color:#5E6980;width:100px">Step 2 ★ AI fits here</div>
+          <div style="font-size:13px;color:#2B2F35">Draft follow-up email</div>
+        </div><div style="display:flex;align-items:center;gap:12px;background:#F7F8FA;border:1px solid #E1E3E8;border-radius:8px;padding:12px 16px">
+          <div style="flex-shrink:0;font-size:11px;font-weight:700;color:#5E6980;width:100px">Step 3</div>
+          <div style="font-size:13px;color:#2B2F35">Review and edit the draft</div>
+        </div><div style="display:flex;align-items:center;gap:12px;background:#F7F8FA;border:1px solid #E1E3E8;border-radius:8px;padding:12px 16px">
+          <div style="flex-shrink:0;font-size:11px;font-weight:700;color:#5E6980;width:100px">Step 4</div>
+          <div style="font-size:13px;color:#2B2F35">Send the email</div>
+        </div><div style="display:flex;align-items:center;gap:12px;background:#F7F8FA;border:1px solid #E1E3E8;border-radius:8px;padding:12px 16px">
+          <div style="flex-shrink:0;font-size:11px;font-weight:700;color:#5E6980;width:100px">Done</div>
+          <div style="font-size:13px;color:#2B2F35">File notes for next time</div>
+        </div></div><p style="font-size:13px;color:#5E6980;margin-top:8px">★ The starred step is where the GOAL message from Level 2 gets used.</p></div>
+
+<div class="section">
+    <div class="section-label">Finding the AI fit</div>
+    <h2>Where does AI actually help?</h2>
+    <p>Once you have your steps mapped, look for steps that match these patterns:</p>
+<div class="example-grid" style="margin-top:14px"><div class="example-card">
+          <div class="example-card-label">Writing and drafting</div>
+          <div class="example-card-text">Any step where you are producing words — emails, summaries, reports, responses</div>
+        </div><div class="example-card">
+          <div class="example-card-label">Organising information</div>
+          <div class="example-card-text">Any step where you are sorting, categorising, or structuring content</div>
+        </div><div class="example-card">
+          <div class="example-card-label">Generating options</div>
+          <div class="example-card-text">Any step where you are brainstorming or need a starting point</div>
+        </div><div class="example-card">
+          <div class="example-card-label">Explaining or simplifying</div>
+          <div class="example-card-text">Any step where you need to understand something complex before moving forward</div>
+        </div></div></div>
+
+<div class="section">
+    <div class="section-label">What to keep in mind</div>
+    <h2>A few workflow principles</h2>
+    <p><strong>Start with one step.</strong> You do not need to use AI for every step. Pick the one step where it helps most and build the habit there first.</p>
+    <p><strong>You stay in control.</strong> AI handles a step — you review the output, make changes, and move to the next step. The workflow is still yours.</p>
+    <p><strong>The workflow can evolve.</strong> Once the first AI step feels natural, you can look at adding a second. Gradual is fine.</p>
+</div>
+
+
+<div class="activity-section">
+    <div class="activity-label">Your Level 4 activity</div>
+    <h2>Map your workflow</h2>
+    <p>Take your Level 1 task and map it out step by step. Then identify where AI fits. Submit your workflow map using the activity form below.</p>
+    <ol class="activity-steps">
+      <li class="activity-step">
+        <div class="activity-step-num">1</div>
+        <div class="activity-step-text"><strong>Write out the steps</strong><br>Take your Level 1 task and write every step you take to complete it from start to finish. Aim for three to eight steps.</div>
+      </li><li class="activity-step">
+        <div class="activity-step-num">2</div>
+        <div class="activity-step-text"><strong>Mark where AI fits</strong><br>Look at each step and mark it: AI helps here / AI does not help here / Not sure. Use the patterns from the lesson above as a guide.</div>
+      </li><li class="activity-step">
+        <div class="activity-step-num">3</div>
+        <div class="activity-step-text"><strong>Write one AI step in detail</strong><br>Pick the step where AI helps most. Write what you would ask AI to do at that step — this can be your GOAL message from Level 2.</div>
+      </li><li class="activity-step">
+        <div class="activity-step-num">4</div>
+        <div class="activity-step-text"><strong>Submit your workflow map</strong><br>Paste your step list and your marked AI step into the activity form below.</div>
+      </li>
+    </ol>
+    <div class="form-placeholder">
+      <div class="form-placeholder-icon">📋</div>
+      <div class="form-placeholder-text">The Level 4 activity form will appear here.<br>Check back shortly — it is being set up.</div>
+      <div class="form-placeholder-note">[TALLY LEVEL 4 FORM LINK — replace when form is built]</div>
+    </div>
+  </div>
+
+<div class="nav-section">
+    <a href="https://aiforworkbootcamp.github.io/aiforwork/level3.html" class="nav-back">← Back to Level 3</a>
+    <div>
+      <a href="https://aiforworkbootcamp.github.io/aiforwork/level5.html" class="nav-next">Level 5 — Build Your Personal AI Workflow →</a>
+      <div class="nav-next-note">Complete the activity above to continue</div>
+    </div>
+  </div>
+<div class="support-strip">Got stuck on this level? <a href="[SUPPORT FORM LINK]">Use the support form</a></div>
+<div class="privacy-strip">This is a beta project. Your responses, including any work examples or workflow you submit, will be reviewed by the course founder to improve the course and will not be shared outside this project.</div>
+<div class="founder-note">
+    <div class="founder-note-title">⚠ For Founder Use Only — Delete This Section Before Going Live</div>
+
+    <h3>Your live URL for this page</h3>
+    <p><strong>https://aiforworkbootcamp.github.io/aiforwork/level4.html</strong></p>
+
+    <h3>How to upload this page to GitHub</h3>
+    <ol>
+      <li>Go to github.com and log in as aiforworkbootcamp.</li>
+      <li>Click on the aiforwork repository.</li>
+      <li>Click Add file → Upload files.</li>
+      <li>Upload this file (level4.html).</li>
+      <li>Click Commit changes.</li>
+    </ol>
+
+    <h3>How to link this page from Systeme.io</h3>
+    <ol>
+      <li>In your course, create a new lecture called: Level 4 — Map a Workflow AI Can Help With.</li>
+      <li>Add a button element with the text: Open Level 4 →</li>
+      <li>Link the button to: https://aiforworkbootcamp.github.io/aiforwork/level4.html</li>
+      <li>Set the button to open in a new tab.</li>
+      <li>Save. Keep in draft mode until all levels are ready.</li>
+    </ol>
+
+    <h3>Things to fill in before going live</h3>
+    <ol>
+      <li>Replace <code>[TALLY LEVEL 4 FORM LINK — replace when form is built]</code> with the actual Tally form URL once the Level 4 activity form is built.</li><li>Replace [SUPPORT FORM LINK] with the actual Tally support form URL once built.</li><li>Delete this entire Founder Note section before the beta goes live.</li>
+    </ol>
+
+    <h3>Also update Level 3</h3>
+    <ol>
+      <li>Open level3.html in CotEditor.</li>
+      <li>Find [TALLY LEVEL 3 FORM LINK] and replace it with the actual Tally form URL when built.</li>
+      <li>Re-upload level3.html to GitHub.</li>
+    </ol>
+
+    <div class="warn">Do not share this page with beta participants until all placeholders are replaced and this section is deleted.</div>
+  </div>
+
+</div>
+</body>
+</html>

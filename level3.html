@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Level 3 — Research Without Blind Trust | AI For Work Bootcamp</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:#092E5D;--orange:#F3660C;--charcoal:#2B2F35;
+    --white:#FFFFFF;--off-white:#F7F8FA;--slate:#5E6980;
+    --light-gray:#E1E3E8;--navy-light:#D6E4F0;--orange-light:#FDE8DC;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'DM Sans',sans-serif;background:var(--off-white);color:var(--charcoal);line-height:1.7;-webkit-font-smoothing:antialiased}
+  .progress-bar{background:var(--navy);padding:12px 24px;display:flex;align-items:center;gap:8px;justify-content:center}
+  .progress-step{width:28px;height:6px;border-radius:3px;background:rgba(255,255,255,0.2)}
+  .progress-step.active{background:var(--orange)}
+  .progress-step.done{background:rgba(255,255,255,0.5)}
+  .progress-label{font-size:11px;color:rgba(255,255,255,0.5);letter-spacing:.08em;margin-left:8px}
+  .hero{background:var(--navy);padding:48px 24px 44px;text-align:center;position:relative;overflow:hidden}
+  .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 50% 0%,rgba(243,102,12,.15) 0%,transparent 70%);pointer-events:none}
+  .level-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(243,102,12,.15);border:1px solid rgba(243,102,12,.35);color:var(--orange);font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:6px 16px;border-radius:20px;margin-bottom:20px}
+  .level-badge-dot{width:6px;height:6px;background:var(--orange);border-radius:50%}
+  .hero h1{font-family:'DM Serif Display',serif;font-size:clamp(24px,5.5vw,40px);color:var(--white);line-height:1.2;margin-bottom:12px}
+  .hero-sub{font-size:15px;color:rgba(255,255,255,.55);max-width:480px;margin:0 auto;line-height:1.65}
+  .outcome-banner{background:var(--orange);padding:14px 24px;text-align:center;font-size:13px;font-weight:600;color:var(--white);letter-spacing:.01em}
+  .outcome-banner span{opacity:.75;font-weight:400;margin-right:6px}
+  .page-wrap{padding:24px 16px 0}
+  .section{background:var(--white);border-radius:12px;padding:36px 32px;max-width:680px;margin:0 auto 16px;box-shadow:0 1px 3px rgba(9,46,93,.06),0 4px 16px rgba(9,46,93,.04)}
+  .section-label{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--orange);margin-bottom:10px}
+  .section h2{font-family:'DM Serif Display',serif;font-size:22px;color:var(--navy);margin-bottom:14px;line-height:1.3}
+  .section p{font-size:15px;color:var(--slate);margin-bottom:12px;line-height:1.75}
+  .section p:last-child{margin-bottom:0}
+  .section p strong{color:var(--charcoal);font-weight:600}
+  .example-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}
+  @media(max-width:480px){.example-grid{grid-template-columns:1fr}}
+  .example-card{background:var(--off-white);border:1px solid var(--light-gray);border-radius:8px;padding:14px 16px;font-size:13px;color:var(--slate);line-height:1.55;transition:border-color .2s}
+  .example-card:hover{border-color:var(--orange)}
+  .example-card-label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--orange);margin-bottom:6px}
+  .example-card-text{color:var(--charcoal);font-weight:500;font-size:13px;line-height:1.55}
+  .highlight-box{background:var(--navy-light);border-left:4px solid var(--navy);border-radius:0 8px 8px 0;padding:16px 20px;margin:16px 0;font-size:14px;color:var(--navy);line-height:1.7}
+  .activity-section{background:var(--navy);border-radius:12px;padding:36px 32px;max-width:680px;margin:0 auto 16px;position:relative;overflow:hidden}
+  .activity-section::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 50% at 50% 100%,rgba(243,102,12,.12) 0%,transparent 70%);pointer-events:none}
+  .activity-label{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--orange);margin-bottom:10px}
+  .activity-section h2{font-family:'DM Serif Display',serif;font-size:22px;color:var(--white);margin-bottom:12px}
+  .activity-section p{font-size:14px;color:rgba(255,255,255,.65);line-height:1.75;margin-bottom:10px}
+  .activity-steps{list-style:none;display:flex;flex-direction:column;gap:12px;margin:20px 0 24px}
+  .activity-step{display:flex;gap:14px;align-items:flex-start}
+  .activity-step-num{flex-shrink:0;width:28px;height:28px;background:var(--orange);color:var(--white);font-size:13px;font-weight:700;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-top:1px}
+  .activity-step-text{font-size:14px;color:rgba(255,255,255,.85);line-height:1.65;padding-top:3px}
+  .activity-step-text strong{color:var(--white);font-weight:600}
+  .form-placeholder{background:rgba(255,255,255,.07);border:2px dashed rgba(255,255,255,.2);border-radius:10px;padding:32px 24px;text-align:center;margin:8px 0 0}
+  .form-placeholder-icon{font-size:28px;margin-bottom:10px}
+  .form-placeholder-text{font-size:14px;color:rgba(255,255,255,.5);line-height:1.6;font-style:italic}
+  .form-placeholder-note{font-size:11px;color:rgba(255,255,255,.3);margin-top:8px;letter-spacing:.05em}
+  .nav-section{max-width:680px;margin:0 auto 32px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 4px}
+  .nav-back{font-size:13px;color:var(--slate);text-decoration:none;display:flex;align-items:center;gap:6px;padding:10px 16px;border:1px solid var(--light-gray);border-radius:8px;background:var(--white);transition:border-color .2s,color .2s}
+  .nav-back:hover{border-color:var(--navy);color:var(--navy)}
+  .nav-next{display:inline-flex;align-items:center;gap:8px;background:var(--orange);color:var(--white);font-size:14px;font-weight:700;padding:12px 28px;border-radius:8px;text-decoration:none;box-shadow:0 4px 16px rgba(243,102,12,.3);transition:background .2s,transform .15s,box-shadow .2s}
+  .nav-next:hover{background:#d4560a;transform:translateY(-1px);box-shadow:0 6px 24px rgba(243,102,12,.4)}
+  .nav-next-note{font-size:11px;color:var(--slate);text-align:right;margin-top:6px;font-style:italic}
+  .support-strip{max-width:680px;margin:0 auto 32px;text-align:center;font-size:13px;color:var(--slate)}
+  .support-strip a{color:var(--orange);text-decoration:underline;text-underline-offset:3px}
+  .privacy-strip{max-width:680px;margin:0 auto 40px;background:var(--navy-light);border-left:4px solid var(--navy);border-radius:0 8px 8px 0;padding:12px 18px;font-size:12px;color:var(--navy);font-style:italic;line-height:1.6}
+  .founder-note{background:#fff8f5;border:2px dashed var(--orange);border-radius:12px;padding:28px;max-width:680px;margin:0 auto 32px}
+  .founder-note-title{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--orange);margin-bottom:16px}
+  .founder-note h3{font-size:14px;font-weight:700;color:var(--navy);margin:16px 0 6px}
+  .founder-note h3:first-of-type{margin-top:0}
+  .founder-note p,.founder-note li{font-size:13px;color:var(--slate);line-height:1.7}
+  .founder-note ol{padding-left:18px;display:flex;flex-direction:column;gap:6px}
+  .founder-note .warn{margin-top:16px;padding:10px 14px;background:var(--orange);color:var(--white);font-size:13px;font-weight:600;border-radius:6px}
+  .divider{height:1px;background:var(--light-gray);margin:20px 0}
+  @media(max-width:480px){.section{padding:28px 20px}.activity-section{padding:28px 20px}.hero{padding:40px 20px 36px}.nav-section{flex-direction:column;align-items:stretch}.nav-back,.nav-next{text-align:center;justify-content:center}.nav-next-note{text-align:center}}
+</style>
+</head>
+<body>
+
+<div class="progress-bar">
+  <div class="progress-step done"></div>
+  <div class="progress-step done"></div>
+  <div class="progress-step active"></div>
+  <div class="progress-step "></div>
+  <div class="progress-step "></div>
+  <span class="progress-label">Level 3 of 5</span>
+</div>
+
+<div class="hero">
+  <div class="level-badge"><div class="level-badge-dot"></div>Level 3</div>
+  <h1>Research Without Blind Trust</h1>
+  <div class="hero-sub">AI can sound confident and still be wrong. This level teaches you how to use AI responses safely.</div>
+</div>
+
+<div class="outcome-banner">
+  <span>What you will have by the end:</span>One verification habit or checklist you will use every time
+</div>
+
+<div class="page-wrap">
+
+<div class="section">
+    <div class="section-label">The lesson</div>
+    <h2>The confidence problem</h2>
+    <p>AI tools do not know when they are wrong. They generate responses that sound fluent and authoritative whether the information is accurate or not. This is sometimes called hallucination — the AI produces something plausible but incorrect.</p>
+    <p>This does not mean AI is useless. It means you need a habit for checking what it gives you before you act on it — especially for anything that involves facts, numbers, names, dates, or claims you will share with others.</p>
+    <p>The good news: checking AI responses does not have to be slow. A simple three-step habit covers most situations.</p>
+</div>
+
+<div class="section">
+    <div class="section-label">What to watch for</div>
+    <h2>Three things AI gets wrong most often</h2>
+    <p>Knowing where AI tends to go wrong helps you know what to check.</p>
+<div style="display:flex;flex-direction:column;gap:10px;margin:14px 0"><div class="example-card">
+          <div class="example-card-label" style="color:#092E5D">Specific facts and numbers</div>
+          <div class="example-card-text">Statistics, percentages, dates, prices, and named studies are high-risk. AI generates plausible-sounding figures that may be invented.</div>
+        </div><div class="example-card">
+          <div class="example-card-label" style="color:#092E5D">Names and quotes</div>
+          <div class="example-card-text">AI sometimes attributes quotes or credentials to real people incorrectly. Always verify before sharing.</div>
+        </div><div class="example-card">
+          <div class="example-card-label" style="color:#092E5D">Recent events</div>
+          <div class="example-card-text">AI training data has a cutoff date. Anything recent — news, updated policies, new research — may be missing or wrong.</div>
+        </div></div></div>
+
+<div class="section">
+    <div class="section-label">The checking habit</div>
+    <h2>Your three-step checking habit</h2>
+    <p>You do not need to verify everything word for word. You need a consistent habit that catches the things that matter.</p>
+<ol class="activity-steps" style="margin-top:14px"><li class="activity-step">
+          <div class="activity-step-num">1</div>
+          <div class="activity-step-text"><strong>Read it like a human, not a machine</strong><br>Does it actually make sense? Does it answer what you asked? Would you be comfortable putting your name on it?</div>
+        </li><li class="activity-step">
+          <div class="activity-step-num">2</div>
+          <div class="activity-step-text"><strong>Check any specific facts independently</strong><br>If the response contains statistics, names, dates, or claims — look them up. Use a search engine or a source you trust.</div>
+        </li><li class="activity-step">
+          <div class="activity-step-num">3</div>
+          <div class="activity-step-text"><strong>Apply your own knowledge</strong><br>You know your work better than AI does. Does this response fit your situation? Does anything feel off?</div>
+        </li></ol></div>
+
+<div class="section">
+    <div class="section-label">What this means practically</div>
+    <h2>When to check and when it is fine to trust</h2>
+    <p><strong>Check carefully:</strong> Anything with specific facts, statistics, names, dates, legal or medical information, or anything you will publish or share with others.</p>
+    <p><strong>Lower risk:</strong> Drafting a structure or outline, brainstorming options, summarising something you already understand, or writing a first draft you will review yourself.</p>
+    <p>The task you identified in Level 1 will tell you which category it falls into. Most beginner AI use cases — drafting emails, summarising documents, creating templates — are lower risk. Still worth a quick read-through, but not a deep fact-check.</p>
+</div>
+
+
+<div class="activity-section">
+    <div class="activity-label">Your Level 3 activity</div>
+    <h2>Build your checking habit</h2>
+    <p>You are going to create your own simple verification checklist — three to five questions you will ask yourself every time you use an AI response for real work. Then submit it using the activity form.</p>
+    <ol class="activity-steps">
+      <li class="activity-step">
+        <div class="activity-step-num">1</div>
+        <div class="activity-step-text"><strong>Think about your Level 1 task</strong><br>What could go wrong if the AI gave you incorrect information for that task? What would you need to check before using the response?</div>
+      </li><li class="activity-step">
+        <div class="activity-step-num">2</div>
+        <div class="activity-step-text"><strong>Write your checklist</strong><br>Write three to five questions you will ask yourself before using any AI response. Example: Does this contain any specific facts or numbers I should verify? Does this sound like something I would actually say or write?</div>
+      </li><li class="activity-step">
+        <div class="activity-step-num">3</div>
+        <div class="activity-step-text"><strong>Keep it somewhere useful</strong><br>Save your checklist somewhere you will actually see it — a sticky note, a phone note, a document. You will use it in every level from here.</div>
+      </li><li class="activity-step">
+        <div class="activity-step-num">4</div>
+        <div class="activity-step-text"><strong>Submit your checklist</strong><br>Paste your checklist into the activity form below.</div>
+      </li>
+    </ol>
+    <div class="form-placeholder">
+      <div class="form-placeholder-icon">📋</div>
+      <div class="form-placeholder-text">The Level 3 activity form will appear here.<br>Check back shortly — it is being set up.</div>
+      <div class="form-placeholder-note">[TALLY LEVEL 3 FORM LINK — replace when form is built]</div>
+    </div>
+  </div>
+
+<div class="nav-section">
+    <a href="https://aiforworkbootcamp.github.io/aiforwork/level2.html" class="nav-back">← Back to Level 2</a>
+    <div>
+      <a href="https://aiforworkbootcamp.github.io/aiforwork/level4.html" class="nav-next">Level 4 — Map a Workflow →</a>
+      <div class="nav-next-note">Complete the activity above to continue</div>
+    </div>
+  </div>
+<div class="support-strip">Got stuck on this level? <a href="[SUPPORT FORM LINK]">Use the support form</a></div>
+<div class="privacy-strip">This is a beta project. Your responses, including any work examples or workflow you submit, will be reviewed by the course founder to improve the course and will not be shared outside this project.</div>
+<div class="founder-note">
+    <div class="founder-note-title">⚠ For Founder Use Only — Delete This Section Before Going Live</div>
+
+    <h3>Your live URL for this page</h3>
+    <p><strong>https://aiforworkbootcamp.github.io/aiforwork/level3.html</strong></p>
+
+    <h3>How to upload this page to GitHub</h3>
+    <ol>
+      <li>Go to github.com and log in as aiforworkbootcamp.</li>
+      <li>Click on the aiforwork repository.</li>
+      <li>Click Add file → Upload files.</li>
+      <li>Upload this file (level3.html).</li>
+      <li>Click Commit changes.</li>
+    </ol>
+
+    <h3>How to link this page from Systeme.io</h3>
+    <ol>
+      <li>In your course, create a new lecture called: Level 3 — Research Without Blind Trust.</li>
+      <li>Add a button element with the text: Open Level 3 →</li>
+      <li>Link the button to: https://aiforworkbootcamp.github.io/aiforwork/level3.html</li>
+      <li>Set the button to open in a new tab.</li>
+      <li>Save. Keep in draft mode until all levels are ready.</li>
+    </ol>
+
+    <h3>Things to fill in before going live</h3>
+    <ol>
+      <li>Replace <code>[TALLY LEVEL 3 FORM LINK — replace when form is built]</code> with the actual Tally form URL once the Level 3 activity form is built.</li><li>Replace [SUPPORT FORM LINK] with the actual Tally support form URL once built.</li><li>Delete this entire Founder Note section before the beta goes live.</li>
+    </ol>
+
+    <h3>Also update Level 2</h3>
+    <ol>
+      <li>Open level2.html in CotEditor.</li>
+      <li>Find [TALLY LEVEL 2 FORM LINK] and replace it with the actual Tally form URL when built.</li>
+      <li>Re-upload level2.html to GitHub.</li>
+    </ol>
+
+    <div class="warn">Do not share this page with beta participants until all placeholders are replaced and this section is deleted.</div>
+  </div>
+
+</div>
+</body>
+</html>
