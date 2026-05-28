@@ -1,542 +1,131 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI For Work Bootcamp — Welcome & Start Here</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --navy:   #092E5D;
-    --orange: #F3660C;
-    --charcoal: #2B2F35;
-    --white:  #FFFFFF;
-    --off-white: #F7F8FA;
-    --slate:  #5E6980;
-    --light-gray: #E1E3E8;
-    --navy-light: #D6E4F0;
-  }
-
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--off-white);
-    color: var(--charcoal);
-    line-height: 1.7;
-    -webkit-font-smoothing: antialiased;
-  }
-
-  /* ── HERO ── */
-  .hero {
-    background: var(--navy);
-    padding: 56px 24px 48px;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-  }
-  .hero::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(243,102,12,0.18) 0%, transparent 70%);
-    pointer-events: none;
-  }
-  .hero-label {
-    display: inline-block;
-    background: rgba(243,102,12,0.18);
-    border: 1px solid rgba(243,102,12,0.4);
-    color: var(--orange);
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    padding: 5px 14px;
-    border-radius: 20px;
-    margin-bottom: 20px;
-  }
-  .hero h1 {
-    font-family: 'DM Serif Display', serif;
-    font-size: clamp(28px, 6vw, 48px);
-    color: var(--white);
-    line-height: 1.2;
-    margin-bottom: 10px;
-  }
-  .hero-sub {
-    font-size: 15px;
-    color: rgba(255,255,255,0.6);
-    margin-bottom: 20px;
-    letter-spacing: 0.02em;
-  }
-  .hero-thank {
-    display: inline-block;
-    background: var(--orange);
-    color: var(--white);
-    font-size: 14px;
-    font-weight: 600;
-    padding: 10px 24px;
-    border-radius: 6px;
-    letter-spacing: 0.01em;
-  }
-
-  /* ── CONTAINER ── */
-  .container {
-    max-width: 680px;
-    margin: 0 auto;
-    padding: 0 20px;
-  }
-
-  /* ── SECTION ── */
-  .section {
-    background: var(--white);
-    border-radius: 12px;
-    padding: 36px 32px;
-    margin: 20px auto;
-    max-width: 680px;
-    margin-left: auto;
-    margin-right: auto;
-    box-shadow: 0 1px 3px rgba(9,46,93,0.06), 0 4px 16px rgba(9,46,93,0.04);
-  }
-
-  .section + .section { margin-top: 16px; }
-
-  .section-label {
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--orange);
-    margin-bottom: 10px;
-  }
-
-  .section h2 {
-    font-family: 'DM Serif Display', serif;
-    font-size: 22px;
-    color: var(--navy);
-    margin-bottom: 14px;
-    line-height: 1.3;
-  }
-
-  .section p {
-    font-size: 15px;
-    color: var(--slate);
-    margin-bottom: 10px;
-    line-height: 1.75;
-  }
-  .section p:last-child { margin-bottom: 0; }
-
-  /* ── LEVELS ── */
-  .levels { display: flex; flex-direction: column; gap: 10px; margin-top: 4px; }
-
-  .level-card {
-    display: flex;
-    align-items: flex-start;
-    gap: 14px;
-    background: var(--off-white);
-    border: 1px solid var(--light-gray);
-    border-radius: 8px;
-    padding: 16px;
-    transition: border-color 0.2s, box-shadow 0.2s;
-  }
-  .level-card:hover {
-    border-color: var(--orange);
-    box-shadow: 0 2px 12px rgba(243,102,12,0.08);
-  }
-
-  .level-num {
-    flex-shrink: 0;
-    width: 36px;
-    height: 36px;
-    background: var(--navy);
-    color: var(--white);
-    font-family: 'DM Serif Display', serif;
-    font-size: 17px;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .level-content { flex: 1; }
-  .level-title {
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--navy);
-    margin-bottom: 3px;
-  }
-  .level-desc {
-    font-size: 13px;
-    color: var(--slate);
-    line-height: 1.5;
-  }
-
-  /* ── OUTCOMES ── */
-  .outcome-list { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-top: 4px; }
-  .outcome-list li {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    font-size: 14px;
-    color: var(--slate);
-    line-height: 1.6;
-  }
-  .outcome-list li::before {
-    content: '';
-    flex-shrink: 0;
-    width: 18px;
-    height: 18px;
-    margin-top: 2px;
-    background: var(--orange);
-    border-radius: 50%;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' fill='none'%3E%3Cpath d='M2.5 6l2.5 2.5 4.5-5' stroke='white' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 12px;
-  }
-
-  /* ── STEPS (completion) ── */
-  .step-list { display: flex; flex-direction: column; gap: 10px; margin-top: 4px; counter-reset: steps; }
-  .step-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 14px;
-    counter-increment: steps;
-  }
-  .step-num {
-    flex-shrink: 0;
-    width: 28px;
-    height: 28px;
-    background: var(--navy-light);
-    color: var(--navy);
-    font-size: 13px;
-    font-weight: 700;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 2px;
-  }
-  .step-text {
-    font-size: 14px;
-    color: var(--slate);
-    line-height: 1.65;
-    padding-top: 3px;
-  }
-  .step-note {
-    display: block;
-    margin-top: 12px;
-    font-size: 13px;
-    color: var(--slate);
-    font-style: italic;
-    padding: 10px 14px;
-    background: var(--off-white);
-    border-left: 3px solid var(--orange);
-    border-radius: 0 6px 6px 0;
-  }
-
-  /* ── SUPPORT ── */
-  .support-box {
-    background: var(--off-white);
-    border: 1px solid var(--light-gray);
-    border-radius: 8px;
-    padding: 18px 20px;
-    margin-top: 12px;
-    font-size: 14px;
-    color: var(--slate);
-    line-height: 1.7;
-  }
-
-  /* ── PRIVACY ── */
-  .privacy-box {
-    background: var(--navy-light);
-    border-left: 4px solid var(--navy);
-    border-radius: 0 8px 8px 0;
-    padding: 14px 18px;
-    font-size: 13px;
-    color: var(--navy);
-    font-style: italic;
-    line-height: 1.65;
-    margin-top: 8px;
-  }
-
-  /* ── CTA ── */
-  .cta-section {
-    background: var(--navy);
-    border-radius: 12px;
-    padding: 36px 32px;
-    text-align: center;
-    max-width: 680px;
-    margin: 16px auto 32px;
-    position: relative;
-    overflow: hidden;
-  }
-  .cta-section::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(ellipse 70% 80% at 50% 100%, rgba(243,102,12,0.15) 0%, transparent 70%);
-    pointer-events: none;
-  }
-  .cta-section h2 {
-    font-family: 'DM Serif Display', serif;
-    font-size: 22px;
-    color: var(--white);
-    margin-bottom: 8px;
-  }
-  .cta-section p {
-    font-size: 14px;
-    color: rgba(255,255,255,0.55);
-    margin-bottom: 22px;
-  }
-  .cta-btn {
-    display: inline-block;
-    background: var(--orange);
-    color: var(--white);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 15px;
-    font-weight: 700;
-    padding: 14px 36px;
-    border-radius: 8px;
-    text-decoration: none;
-    letter-spacing: 0.01em;
-    transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
-    box-shadow: 0 4px 16px rgba(243,102,12,0.35);
-  }
-  .cta-btn:hover {
-    background: #d4560a;
-    transform: translateY(-1px);
-    box-shadow: 0 6px 24px rgba(243,102,12,0.45);
-  }
-  .cta-support {
-    display: block;
-    margin-top: 16px;
-    font-size: 13px;
-    color: rgba(255,255,255,0.4);
-  }
-  .cta-support a {
-    color: rgba(255,255,255,0.65);
-    text-decoration: underline;
-    text-underline-offset: 3px;
-  }
-
-  /* ── DIVIDER ── */
-  .divider {
-    height: 1px;
-    background: var(--light-gray);
-    margin: 20px 0;
-  }
-
-  /* ── WRAPPER ── */
-  .page-wrap {
-    padding: 24px 16px 0;
-  }
-
-  /* ── FOUNDER NOTE (hidden from learners — delete before live) ── */
-  .founder-note {
-    background: #fff8f5;
-    border: 2px dashed var(--orange);
-    border-radius: 12px;
-    padding: 28px 28px;
-    max-width: 680px;
-    margin: 16px auto 32px;
-  }
-  .founder-note-title {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--orange);
-    margin-bottom: 16px;
-  }
-  .founder-note h3 {
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--navy);
-    margin: 18px 0 6px;
-  }
-  .founder-note h3:first-of-type { margin-top: 0; }
-  .founder-note p, .founder-note li {
-    font-size: 13px;
-    color: var(--slate);
-    line-height: 1.7;
-  }
-  .founder-note ol { padding-left: 18px; display: flex; flex-direction: column; gap: 6px; }
-  .founder-note .warn {
-    margin-top: 16px;
-    padding: 10px 14px;
-    background: var(--orange);
-    color: var(--white);
-    font-size: 13px;
-    font-weight: 600;
-    border-radius: 6px;
-  }
-
-  @media (max-width: 480px) {
-    .section { padding: 28px 20px; }
-    .cta-section { padding: 28px 20px; }
-    .hero { padding: 40px 20px 36px; }
-  }
-</style>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2299.6">
+  <style type="text/css">
+    body {background-color: #f5f6f9}
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: center; font: 11.0px 'Helvetica Neue'; color: #ed4f0e; -webkit-text-stroke: #ed4f0e}
+    p.p3 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: center; font: 15.0px 'Helvetica Neue'; color: #ffffff; color: rgba(255, 255, 255, 0.6); -webkit-text-stroke: rgba(255, 255, 255, 0.6)}
+    p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: center; font: 14.0px 'Helvetica Neue'; color: #ffffff; -webkit-text-stroke: #ffffff; background-color: #ed4f0e}
+    p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; font: 10.0px 'Helvetica Neue'; color: #ed4f0e; -webkit-text-stroke: #ed4f0e}
+    p.p7 {margin: 0.0px 0.0px 10.0px 0.0px; font: 15.0px 'Helvetica Neue'; color: #4c556d; -webkit-text-stroke: #4c556d}
+    p.p8 {margin: 0.0px 0.0px 0.0px 0.0px; font: 15.0px 'Helvetica Neue'; color: #4c556d; -webkit-text-stroke: #4c556d}
+    p.p9 {margin: 0.0px 0.0px 0.0px 0.0px; font: 17.0px 'Helvetica Neue'; color: #ffffff; -webkit-text-stroke: #ffffff}
+    p.p10 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px 'Helvetica Neue'; color: #0a214a; -webkit-text-stroke: #0a214a}
+    p.p11 {margin: 0.0px 0.0px 0.0px 0.0px; font: 13.0px 'Helvetica Neue'; color: #4c556d; -webkit-text-stroke: #4c556d}
+    p.p13 {margin: 0.0px 0.0px 0.0px 0.0px; font: 13.0px 'Helvetica Neue'; color: #0a214a; -webkit-text-stroke: #0a214a}
+    p.p14 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px 'Helvetica Neue'; color: #4c556d; -webkit-text-stroke: #4c556d}
+    p.p15 {margin: 0.0px 0.0px 0.0px 0.0px; font: 13.0px 'Helvetica Neue'; color: #4c556d; -webkit-text-stroke: #4c556d; background-color: #f5f6f9}
+    p.p16 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px 'Helvetica Neue'; color: #4c556d; -webkit-text-stroke: #4c556d; min-height: 17.0px}
+    p.p17 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px 'Helvetica Neue'; color: #4c556d; -webkit-text-stroke: #4c556d; background-color: #f5f6f9}
+    p.p18 {margin: 0.0px 0.0px 0.0px 0.0px; font: 13.0px 'Helvetica Neue'; color: #0a214a; -webkit-text-stroke: #0a214a; background-color: #cdddec}
+    p.p20 {margin: 0.0px 0.0px 22.0px 0.0px; text-align: center; font: 14.0px 'Helvetica Neue'; color: #ffffff; color: rgba(255, 255, 255, 0.55); -webkit-text-stroke: rgba(255, 255, 255, 0.55)}
+    p.p21 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: center; font: 15.0px 'Helvetica Neue'; color: #ffffff; -webkit-text-stroke: #ffffff}
+    p.p22 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: center; font: 13.0px 'Helvetica Neue'; color: #ffffff; color: rgba(255, 255, 255, 0.65); -webkit-text-stroke: rgba(255, 255, 255, 0.65)}
+    p.p23 {margin: 0.0px 0.0px 0.0px 0.0px; font: 11.0px 'Helvetica Neue'; color: #ed4f0e; -webkit-text-stroke: #ed4f0e}
+    p.p25 {margin: 0.0px 0.0px 0.0px 0.0px; font: 13.0px 'Helvetica Neue'; color: #ffffff; -webkit-text-stroke: #ffffff; background-color: #ed4f0e}
+    li.li11 {margin: 0.0px 0.0px 0.0px 0.0px; font: 13.0px 'Helvetica Neue'; color: #4c556d; -webkit-text-stroke: #4c556d}
+    li.li12 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px 'Helvetica Neue'; color: #4c556d; -webkit-text-stroke: #4c556d; background-color: #ffffff}
+    span.s1 {font-kerning: none; background-color: rgba(237, 79, 14, 0.18)}
+    span.s2 {font-kerning: none; background-color: #0a214a}
+    span.s3 {font-kerning: none}
+    span.s4 {font-kerning: none; background-color: #ffffff}
+    span.s5 {font-kerning: none; background-color: #f5f6f9}
+    span.s6 {-webkit-text-stroke: 0px #000000}
+    span.s7 {font: 12.0px 'Helvetica Neue'; font-kerning: none; color: #202328; -webkit-text-stroke: 0px #202328}
+    span.s8 {font-kerning: none; background-color: #cdddec}
+    span.s9 {font-kerning: none; background-color: #ed4f0e}
+    span.s10 {font-kerning: none; color: rgba(255, 255, 255, 0.4); background-color: #0a214a; -webkit-text-stroke: 0px rgba(255, 255, 255, 0.4)}
+    span.s11 {text-decoration: underline ; font-kerning: none; color: rgba(255, 255, 255, 0.65); -webkit-text-stroke: 0px rgba(255, 255, 255, 0.65)}
+    span.s12 {font-kerning: none; background-color: #fff6f2}
+    span.s13 {background-color: #fff6f2; -webkit-text-stroke: 0px #000000}
+    ol.ol1 {list-style-type: decimal}
+    ul.ul1 {list-style-type: none}
+  </style>
 </head>
 <body>
-
-<!-- HERO -->
-<div class="hero">
-  <div class="hero-label">Beta Program</div>
-  <h1>AI For Work Bootcamp</h1>
-  <div class="hero-sub">Welcome &amp; Start Here</div>
-  <div class="hero-thank">You are in the beta. Thank you for being here.</div>
-</div>
-
-<div class="page-wrap">
-
-  <!-- WHAT THIS IS -->
-  <div class="section">
-    <div class="section-label">About this course</div>
-    <h2>What this is</h2>
-    <p>AI For Work Bootcamp is a beginner-friendly course that teaches you simple, practical AI workflows you can use in real work and everyday tasks.</p>
-    <p>This is a beta — meaning you are one of the first people to go through it. The content is real and complete, but some things may be rough around the edges. Your feedback helps make it better.</p>
-  </div>
-
-  <!-- WHAT YOU WILL DO -->
-  <div class="section">
-    <div class="section-label">The course</div>
-    <h2>What you will do</h2>
-    <p>This course has 5 short levels. Each one builds on the last and ends with something practical you keep.</p>
-    <div class="levels">
-      <div class="level-card">
-        <div class="level-num">1</div>
-        <div class="level-content">
-          <div class="level-title">Find Your AI Starting Point</div>
-          <div class="level-desc">You will pick one real task where AI could help you.</div>
-        </div>
-      </div>
-      <div class="level-card">
-        <div class="level-num">2</div>
-        <div class="level-content">
-          <div class="level-title">Build a Better Work Prompt</div>
-          <div class="level-desc">You will write your first structured AI message using a simple framework.</div>
-        </div>
-      </div>
-      <div class="level-card">
-        <div class="level-num">3</div>
-        <div class="level-content">
-          <div class="level-title">Research Without Blind Trust</div>
-          <div class="level-desc">You will learn how to check AI responses so you use them safely.</div>
-        </div>
-      </div>
-      <div class="level-card">
-        <div class="level-num">4</div>
-        <div class="level-content">
-          <div class="level-title">Map a Workflow AI Can Help With</div>
-          <div class="level-desc">You will map out the steps of a task AI can support.</div>
-        </div>
-      </div>
-      <div class="level-card">
-        <div class="level-num">5</div>
-        <div class="level-content">
-          <div class="level-title">Build Your Personal AI Workflow</div>
-          <div class="level-desc">You will put everything together into one workflow you can actually use.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- OUTCOMES -->
-  <div class="section">
-    <div class="section-label">What you walk away with</div>
-    <h2>What you will have at the end</h2>
-    <ul class="outcome-list">
-      <li>One practical AI use case that fits your real work</li>
-      <li>One starter prompt or message you have already written</li>
-      <li>One habit or checklist for checking AI responses</li>
-      <li>One repeatable workflow you can use again and again</li>
-    </ul>
-  </div>
-
-  <!-- COMPLETION -->
-  <div class="section">
-    <div class="section-label">Completion</div>
-    <h2>How to be counted as a completer</h2>
-    <p>To complete the beta, you need to do three things:</p>
-    <div class="step-list">
-      <div class="step-item">
-        <div class="step-num">1</div>
-        <div class="step-text">Finish all 5 levels</div>
-      </div>
-      <div class="step-item">
-        <div class="step-num">2</div>
-        <div class="step-text">Submit your final workflow using the form at the end of Level 5</div>
-      </div>
-      <div class="step-item">
-        <div class="step-num">3</div>
-        <div class="step-text">Fill out the short feedback form after you submit your workflow</div>
-      </div>
-    </div>
-    <span class="step-note">That is it. No test. No certificate. Just a workflow you actually built.</span>
-  </div>
-
-  <!-- SUPPORT -->
-  <div class="section">
-    <div class="section-label">Help</div>
-    <h2>If you get stuck</h2>
-    <div class="support-box">
-      Use the support form linked at the bottom of each level page. Describe where you got stuck and what you were trying to do. The founder reviews every submission and will follow up.<br><br>
-      There is no live chat or email support during the beta. The form is the best way to reach us.
-    </div>
-  </div>
-
-  <!-- PRIVACY -->
-  <div class="section">
-    <div class="section-label">Your data</div>
-    <h2>A note on your data</h2>
-    <div class="privacy-box">
-      This is a beta project. Your responses will be reviewed by the course founder to improve the course and will not be shared outside this project.
-    </div>
-  </div>
-
-  <!-- CTA -->
-  <div class="cta-section">
-    <h2>Ready? Start with Level 1.</h2>
-    <p>Level 1: Find Your AI Starting Point</p>
-    <a href="[LEVEL 1 LINK]" class="cta-btn">Start Level 1 →</a>
-    <span class="cta-support">Got a question? <a href="[SUPPORT FORM LINK]">Use the support form</a></span>
-  </div>
-
-  <!-- FOUNDER INSTRUCTIONS — DELETE BEFORE GOING LIVE -->
-  <div class="founder-note">
-    <div class="founder-note-title">⚠ For Founder Use Only — Delete This Section Before Going Live</div>
-
-    <h3>How to host this page for free using Google Drive</h3>
-    <ol>
-      <li>Save this file (welcome.html) to your computer.</li>
-      <li>Go to drive.google.com and upload the file.</li>
-      <li>Right-click the file in Google Drive and click Share.</li>
-      <li>Change access to Anyone with the link can view.</li>
-      <li>Copy the file's sharing link. It will look like: docs.google.com/file/d/XXXXX/view</li>
-      <li>Change the word <strong>view</strong> at the end to <strong>preview</strong> so it reads: docs.google.com/file/d/XXXXX/preview — this makes it render as a page, not a download.</li>
-      <li>That URL is your Welcome Page link. Use it anywhere you would have linked to a Systeme.io page.</li>
-    </ol>
-
-    <h3>How to link this page from Systeme.io</h3>
-    <ol>
-      <li>In your Systeme.io course, open the Welcome &amp; Start Here lecture.</li>
-      <li>Delete everything currently in the lecture editor.</li>
-      <li>Add a single Text block that says: Click here to open your Welcome Page.</li>
-      <li>Link that text to the Google Drive preview URL above.</li>
-      <li>Save. The lecture now acts as a redirect to your fully branded page.</li>
-    </ol>
-
-    <h3>Before going live — two things to do in this file</h3>
-    <ol>
-      <li>Replace [LEVEL 1 LINK] in the Start Level 1 button with the actual Level 1 URL once it is built.</li>
-      <li>Replace [SUPPORT FORM LINK] in the support line with the actual Tally support form URL once it is built.</li>
-      <li>Delete this entire Founder Note section from the HTML file before uploading the final version to Google Drive.</li>
-    </ol>
-
-    <div class="warn">Do not share the Google Drive link with beta participants until both placeholders are replaced and this section is deleted.</div>
-  </div>
-
-</div><!-- end page-wrap -->
+<p class="p1"><span class="s1">BETA PROGRAM</span></p>
+<h1 style="margin: 0.0px 0.0px 10.0px 0.0px; text-align: center; font: 48.0px 'Helvetica Neue'; color: #ffffff; -webkit-text-stroke: #ffffff"><span class="s2">AI For Work Bootcamp</span></h1>
+<p class="p3"><span class="s2">Welcome &amp; Start Here</span></p>
+<p class="p4"><span class="s3">You are in the beta. Thank you for being here.</span></p>
+<p class="p5"><span class="s4">ABOUT THIS COURSE</span></p>
+<h2 style="margin: 0.0px 0.0px 14.0px 0.0px; font: 22.0px 'Helvetica Neue'; color: #0a214a; -webkit-text-stroke: #0a214a"><span class="s4">What this is</span></h2>
+<p class="p7"><span class="s4">AI For Work Bootcamp is a beginner-friendly course that teaches you simple, practical AI workflows you can use in real work and everyday tasks.</span></p>
+<p class="p8"><span class="s4">This is a beta — meaning you are one of the first people to go through it. The content is real and complete, but some things may be rough around the edges. Your feedback helps make it better.</span></p>
+<p class="p5"><span class="s4">THE COURSE</span></p>
+<h2 style="margin: 0.0px 0.0px 14.0px 0.0px; font: 22.0px 'Helvetica Neue'; color: #0a214a; -webkit-text-stroke: #0a214a"><span class="s4">What you will do</span></h2>
+<p class="p7"><span class="s4">This course has 5 short levels. Each one builds on the last and ends with something practical you keep.</span></p>
+<p class="p9"><span class="s2">1</span></p>
+<p class="p10"><span class="s5">Find Your AI Starting Point</span></p>
+<p class="p11"><span class="s5">You will pick one real task where AI could help you.</span></p>
+<p class="p9"><span class="s2">2</span></p>
+<p class="p10"><span class="s5">Build a Better Work Prompt</span></p>
+<p class="p11"><span class="s5">You will write your first structured AI message using a simple framework.</span></p>
+<p class="p9"><span class="s2">3</span></p>
+<p class="p10"><span class="s5">Research Without Blind Trust</span></p>
+<p class="p11"><span class="s5">You will learn how to check AI responses so you use them safely.</span></p>
+<p class="p9"><span class="s2">4</span></p>
+<p class="p10"><span class="s5">Map a Workflow AI Can Help With</span></p>
+<p class="p11"><span class="s5">You will map out the steps of a task AI can support.</span></p>
+<p class="p9"><span class="s2">5</span></p>
+<p class="p10"><span class="s5">Build Your Personal AI Workflow</span></p>
+<p class="p11"><span class="s5">You will put everything together into one workflow you can actually use.</span></p>
+<p class="p5"><span class="s4">WHAT YOU WALK AWAY WITH</span></p>
+<h2 style="margin: 0.0px 0.0px 14.0px 0.0px; font: 22.0px 'Helvetica Neue'; color: #0a214a; -webkit-text-stroke: #0a214a"><span class="s4">What you will have at the end</span></h2>
+<ul class="ul1">
+  <li class="li12"><span class="s6"></span><span class="s3">One practical AI use case that fits your real work</span><span class="s7"> </span><span class="s3">One starter prompt or message you have already written</span><span class="s7"> </span><span class="s3">One habit or checklist for checking AI responses</span><span class="s7"> </span><span class="s3">One repeatable workflow you can use again and again</span></li>
+</ul>
+<p class="p5"><span class="s4">COMPLETION</span></p>
+<h2 style="margin: 0.0px 0.0px 14.0px 0.0px; font: 22.0px 'Helvetica Neue'; color: #0a214a; -webkit-text-stroke: #0a214a"><span class="s4">How to be counted as a completer</span></h2>
+<p class="p7"><span class="s4">To complete the beta, you need to do three things:</span></p>
+<p class="p13"><span class="s8">1</span></p>
+<p class="p14"><span class="s4">Finish all 5 levels</span></p>
+<p class="p13"><span class="s8">2</span></p>
+<p class="p14"><span class="s4">Submit your final workflow using the form at the end of Level 5</span></p>
+<p class="p13"><span class="s8">3</span></p>
+<p class="p14"><span class="s4">Fill out the short feedback form after you submit your workflow</span></p>
+<p class="p15"><span class="s3">That is it. No test. No certificate. Just a workflow you actually built.</span></p>
+<p class="p5"><span class="s4">HELP</span></p>
+<h2 style="margin: 0.0px 0.0px 14.0px 0.0px; font: 22.0px 'Helvetica Neue'; color: #0a214a; -webkit-text-stroke: #0a214a"><span class="s4">If you get stuck</span></h2>
+<p class="p14"><span class="s5">Use the support form linked at the bottom of each level page. Describe where you got stuck and what you were trying to do. The founder reviews every submission and will follow up.</span></p>
+<p class="p16"><span class="s3"></span><br></p>
+<p class="p17"><span class="s3">There is no live chat or email support during the beta. The form is the best way to reach us.</span></p>
+<p class="p5"><span class="s4">YOUR DATA</span></p>
+<h2 style="margin: 0.0px 0.0px 14.0px 0.0px; font: 22.0px 'Helvetica Neue'; color: #0a214a; -webkit-text-stroke: #0a214a"><span class="s4">A note on your data</span></h2>
+<p class="p18"><span class="s3">This is a beta project. Your responses will be reviewed by the course founder to improve the course and will not be shared outside this project.</span></p>
+<h2 style="margin: 0.0px 0.0px 8.0px 0.0px; text-align: center; font: 22.0px 'Helvetica Neue'; color: #ffffff; -webkit-text-stroke: #ffffff"><span class="s2">Ready? Start with Level 1.</span></h2>
+<p class="p20"><span class="s2">Level 1: Find Your AI Starting Point</span></p>
+<p class="p21"><span class="s9"><a href="https://aiforworkbootcamp.github.io/aiforwork/level1.html">Start Level 1 →<span class="s3"></span></a></span></p>
+<p class="p22"><span class="s10">Got a question? <a href="file:///Users/timsmacbook/Desktop/AI%20Learning/Claude%20Project%20Files/Systeme.io%20Files/%5BSUPPORT%20FORM%20LINK%5D"><span class="s11">Use the support form</span></a></span></p>
+<p class="p23"><span class="s12">⚠ FOR FOUNDER USE ONLY — DELETE THIS SECTION BEFORE GOING LIVE</span></p>
+<h3 style="margin: 0.0px 0.0px 6.0px 0.0px; font: 14.0px 'Helvetica Neue'; color: #0a214a; -webkit-text-stroke: #0a214a"><span class="s12">How to host this page for free using Google Drive</span></h3>
+<ol class="ol1">
+  <li class="li11"><span class="s13"></span><span class="s12">Save this file (welcome.html) to your computer.</span></li>
+  <li class="li11"><span class="s13"></span><span class="s12">Go to drive.google.com and upload the file.</span></li>
+  <li class="li11"><span class="s13"></span><span class="s12">Right-click the file in Google Drive and click Share.</span></li>
+  <li class="li11"><span class="s13"></span><span class="s12">Change access to Anyone with the link can view.</span></li>
+  <li class="li11"><span class="s13"></span><span class="s12">Copy the file's sharing link. It will look like: docs.google.com/file/d/XXXXX/view</span></li>
+  <li class="li11"><span class="s13"></span><span class="s12">Change the word view at the end to preview so it reads: docs.google.com/file/d/XXXXX/preview — this makes it render as a page, not a download.</span></li>
+  <li class="li11"><span class="s13"></span><span class="s12">That URL is your Welcome Page link. Use it anywhere you would have linked to a Systeme.io page.</span></li>
+</ol>
+<h3 style="margin: 0.0px 0.0px 6.0px 0.0px; font: 14.0px 'Helvetica Neue'; color: #0a214a; -webkit-text-stroke: #0a214a"><span class="s12">How to link this page from Systeme.io</span></h3>
+<ol class="ol1">
+  <li class="li11"><span class="s13"></span><span class="s12">In your Systeme.io course, open the Welcome &amp; Start Here lecture.</span></li>
+  <li class="li11"><span class="s13"></span><span class="s12">Delete everything currently in the lecture editor.</span></li>
+  <li class="li11"><span class="s13"></span><span class="s12">Add a single Text block that says: Click here to open your Welcome Page.</span></li>
+  <li class="li11"><span class="s13"></span><span class="s12">Link that text to the Google Drive preview URL above.</span></li>
+  <li class="li11"><span class="s13"></span><span class="s12">Save. The lecture now acts as a redirect to your fully branded page.</span></li>
+</ol>
+<h3 style="margin: 0.0px 0.0px 6.0px 0.0px; font: 14.0px 'Helvetica Neue'; color: #0a214a; -webkit-text-stroke: #0a214a"><span class="s12">Before going live — two things to do in this file</span></h3>
+<ol class="ol1">
+  <li class="li11"><span class="s13"></span><span class="s12">Replace [LEVEL 1 LINK] in the Start Level 1 button with the actual Level 1 URL once it is built.</span></li>
+  <li class="li11"><span class="s13"></span><span class="s12">Replace [SUPPORT FORM LINK] in the support line with the actual Tally support form URL once it is built.</span></li>
+  <li class="li11"><span class="s13"></span><span class="s12">Delete this entire Founder Note section from the HTML file before uploading the final version to Google Drive.</span></li>
+</ol>
+<p class="p25"><span class="s3">Do not share the Google Drive link with beta participants until both placeholders are replaced and this section is deleted.</span></p>
 </body>
 </html>
