@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Level 1 — Find Your AI Starting Point | AI For Work Bootcamp</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:      #092E5D;
+    --orange:    #F3660C;
+    --charcoal:  #2B2F35;
+    --white:     #FFFFFF;
+    --off-white: #F7F8FA;
+    --slate:     #5E6980;
+    --light-gray:#E1E3E8;
+    --navy-light:#D6E4F0;
+    --orange-light: #FDE8DC;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--off-white);
+    color: var(--charcoal);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── PROGRESS BAR ── */
+  .progress-bar {
+    background: var(--navy);
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: center;
+  }
+  .progress-step {
+    width: 28px;
+    height: 6px;
+    border-radius: 3px;
+    background: rgba(255,255,255,0.2);
+    transition: background 0.3s;
+  }
+  .progress-step.active { background: var(--orange); }
+  .progress-step.done   { background: rgba(255,255,255,0.5); }
+  .progress-label {
+    font-size: 11px;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 0.08em;
+    margin-left: 8px;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--navy);
+    padding: 48px 24px 44px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 70% 60% at 50% 0%, rgba(243,102,12,0.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .level-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(243,102,12,0.15);
+    border: 1px solid rgba(243,102,12,0.35);
+    color: var(--orange);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+  }
+  .level-badge-dot {
+    width: 6px; height: 6px;
+    background: var(--orange);
+    border-radius: 50%;
+  }
+  .hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(26px, 5.5vw, 42px);
+    color: var(--white);
+    line-height: 1.2;
+    margin-bottom: 12px;
+  }
+  .hero-sub {
+    font-size: 15px;
+    color: rgba(255,255,255,0.55);
+    max-width: 480px;
+    margin: 0 auto;
+    line-height: 1.65;
+  }
+
+  /* ── OUTCOME BANNER ── */
+  .outcome-banner {
+    background: var(--orange);
+    padding: 14px 24px;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--white);
+    letter-spacing: 0.01em;
+  }
+  .outcome-banner span {
+    opacity: 0.75;
+    font-weight: 400;
+    margin-right: 6px;
+  }
+
+  /* ── LAYOUT ── */
+  .page-wrap { padding: 24px 16px 0; }
+
+  .section {
+    background: var(--white);
+    border-radius: 12px;
+    padding: 36px 32px;
+    max-width: 680px;
+    margin: 0 auto 16px;
+    box-shadow: 0 1px 3px rgba(9,46,93,0.06), 0 4px 16px rgba(9,46,93,0.04);
+  }
+
+  .section-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 10px;
+  }
+
+  .section h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    color: var(--navy);
+    margin-bottom: 14px;
+    line-height: 1.3;
+  }
+
+  .section p {
+    font-size: 15px;
+    color: var(--slate);
+    margin-bottom: 12px;
+    line-height: 1.75;
+  }
+  .section p:last-child { margin-bottom: 0; }
+
+  .section p strong {
+    color: var(--charcoal);
+    font-weight: 600;
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    height: 1px;
+    background: var(--light-gray);
+    margin: 24px 0;
+  }
+
+  /* ── HIGHLIGHT BOX ── */
+  .highlight-box {
+    background: var(--navy-light);
+    border-left: 4px solid var(--navy);
+    border-radius: 0 8px 8px 0;
+    padding: 16px 20px;
+    margin: 16px 0;
+    font-size: 14px;
+    color: var(--navy);
+    line-height: 1.7;
+  }
+  .highlight-box strong { font-weight: 700; }
+
+  /* ── EXAMPLE CARDS ── */
+  .example-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin: 16px 0;
+  }
+  @media (max-width: 480px) {
+    .example-grid { grid-template-columns: 1fr; }
+  }
+  .example-card {
+    background: var(--off-white);
+    border: 1px solid var(--light-gray);
+    border-radius: 8px;
+    padding: 14px 16px;
+    font-size: 13px;
+    color: var(--slate);
+    line-height: 1.55;
+    transition: border-color 0.2s;
+  }
+  .example-card:hover { border-color: var(--orange); }
+  .example-card-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 6px;
+  }
+  .example-card-text {
+    color: var(--charcoal);
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 1.55;
+  }
+
+  /* ── CHECK LIST ── */
+  .check-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 14px 0;
+  }
+  .check-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 14px;
+    color: var(--slate);
+    line-height: 1.6;
+  }
+  .check-list li::before {
+    content: '';
+    flex-shrink: 0;
+    width: 18px; height: 18px;
+    margin-top: 2px;
+    background: var(--navy);
+    border-radius: 4px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' fill='none'%3E%3Cpath d='M2.5 6l2.5 2.5 4.5-5' stroke='white' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 12px;
+  }
+
+  /* ── CAUTION BOX ── */
+  .caution-box {
+    background: var(--orange-light);
+    border-left: 4px solid var(--orange);
+    border-radius: 0 8px 8px 0;
+    padding: 14px 18px;
+    margin: 16px 0;
+    font-size: 13px;
+    color: var(--charcoal);
+    line-height: 1.65;
+  }
+  .caution-box strong { color: var(--orange); }
+
+  /* ── ACTIVITY SECTION ── */
+  .activity-section {
+    background: var(--navy);
+    border-radius: 12px;
+    padding: 36px 32px;
+    max-width: 680px;
+    margin: 0 auto 16px;
+    position: relative;
+    overflow: hidden;
+  }
+  .activity-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 50% at 50% 100%, rgba(243,102,12,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .activity-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 10px;
+  }
+  .activity-section h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    color: var(--white);
+    margin-bottom: 12px;
+  }
+  .activity-section p {
+    font-size: 14px;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.75;
+    margin-bottom: 10px;
+  }
+  .activity-steps {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 20px 0 24px;
+  }
+  .activity-step {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .activity-step-num {
+    flex-shrink: 0;
+    width: 28px; height: 28px;
+    background: var(--orange);
+    color: var(--white);
+    font-size: 13px;
+    font-weight: 700;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1px;
+  }
+  .activity-step-text {
+    font-size: 14px;
+    color: rgba(255,255,255,0.85);
+    line-height: 1.65;
+    padding-top: 3px;
+  }
+  .activity-step-text strong {
+    color: var(--white);
+    font-weight: 600;
+  }
+
+  /* ── FORM PLACEHOLDER ── */
+  .form-placeholder {
+    background: rgba(255,255,255,0.07);
+    border: 2px dashed rgba(255,255,255,0.2);
+    border-radius: 10px;
+    padding: 32px 24px;
+    text-align: center;
+    margin: 8px 0 0;
+  }
+  .form-placeholder-icon {
+    font-size: 28px;
+    margin-bottom: 10px;
+  }
+  .form-placeholder-text {
+    font-size: 14px;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.6;
+    font-style: italic;
+  }
+  .form-placeholder-note {
+    font-size: 11px;
+    color: rgba(255,255,255,0.3);
+    margin-top: 8px;
+    letter-spacing: 0.05em;
+  }
+
+  /* ── NAV BUTTONS ── */
+  .nav-section {
+    max-width: 680px;
+    margin: 0 auto 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 0 4px;
+  }
+  .nav-back {
+    font-size: 13px;
+    color: var(--slate);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 16px;
+    border: 1px solid var(--light-gray);
+    border-radius: 8px;
+    background: var(--white);
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .nav-back:hover { border-color: var(--navy); color: var(--navy); }
+  .nav-next {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--orange);
+    color: var(--white);
+    font-size: 14px;
+    font-weight: 700;
+    padding: 12px 28px;
+    border-radius: 8px;
+    text-decoration: none;
+    box-shadow: 0 4px 16px rgba(243,102,12,0.3);
+    transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+    opacity: 0.45;
+    cursor: default;
+    pointer-events: none;
+  }
+  .nav-next.unlocked {
+    opacity: 1;
+    cursor: pointer;
+    pointer-events: auto;
+  }
+  .nav-next.unlocked:hover {
+    background: #d4560a;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 24px rgba(243,102,12,0.4);
+  }
+  .nav-next-note {
+    font-size: 11px;
+    color: var(--slate);
+    text-align: right;
+    margin-top: 6px;
+    font-style: italic;
+  }
+
+  /* ── SUPPORT ── */
+  .support-strip {
+    max-width: 680px;
+    margin: 0 auto 32px;
+    text-align: center;
+    font-size: 13px;
+    color: var(--slate);
+  }
+  .support-strip a {
+    color: var(--orange);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  /* ── PRIVACY ── */
+  .privacy-strip {
+    max-width: 680px;
+    margin: 0 auto 40px;
+    background: var(--navy-light);
+    border-left: 4px solid var(--navy);
+    border-radius: 0 8px 8px 0;
+    padding: 12px 18px;
+    font-size: 12px;
+    color: var(--navy);
+    font-style: italic;
+    line-height: 1.6;
+  }
+
+  /* ── FOUNDER NOTE ── */
+  .founder-note {
+    background: #fff8f5;
+    border: 2px dashed var(--orange);
+    border-radius: 12px;
+    padding: 28px;
+    max-width: 680px;
+    margin: 0 auto 32px;
+  }
+  .founder-note-title {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 16px;
+  }
+  .founder-note h3 {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--navy);
+    margin: 16px 0 6px;
+  }
+  .founder-note h3:first-of-type { margin-top: 0; }
+  .founder-note p, .founder-note li {
+    font-size: 13px;
+    color: var(--slate);
+    line-height: 1.7;
+  }
+  .founder-note ol { padding-left: 18px; display: flex; flex-direction: column; gap: 6px; }
+  .founder-note .warn {
+    margin-top: 16px;
+    padding: 10px 14px;
+    background: var(--orange);
+    color: var(--white);
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: 6px;
+  }
+
+  @media (max-width: 480px) {
+    .section { padding: 28px 20px; }
+    .activity-section { padding: 28px 20px; }
+    .hero { padding: 40px 20px 36px; }
+    .nav-section { flex-direction: column; align-items: stretch; }
+    .nav-back { text-align: center; justify-content: center; }
+    .nav-next { text-align: center; justify-content: center; }
+    .nav-next-note { text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- PROGRESS BAR -->
+<div class="progress-bar">
+  <div class="progress-step active"></div>
+  <div class="progress-step"></div>
+  <div class="progress-step"></div>
+  <div class="progress-step"></div>
+  <div class="progress-step"></div>
+  <span class="progress-label">Level 1 of 5</span>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="level-badge"><div class="level-badge-dot"></div>Level 1</div>
+  <h1>Find Your AI Starting Point</h1>
+  <div class="hero-sub">Before you can use AI well, you need to know where it actually fits in your work. That is what this level is for.</div>
+</div>
+
+<!-- OUTCOME BANNER -->
+<div class="outcome-banner">
+  <span>What you will have by the end:</span>One practical AI use case that fits your real work
+</div>
+
+<div class="page-wrap">
+
+  <!-- WHAT THIS LEVEL IS ABOUT -->
+  <div class="section">
+    <div class="section-label">The lesson</div>
+    <h2>What this level is about</h2>
+    <p>A lot of people try AI by asking it random questions and then decide it is not useful. That is not a fair test. AI works best when you give it a specific, real task — not a vague experiment.</p>
+    <p>This level helps you identify <strong>one real task from your own work or life</strong> where AI could genuinely help. Not a made-up example. Your actual work.</p>
+    <p>That task becomes the foundation for everything you do in the rest of the course.</p>
+  </div>
+
+  <!-- WHAT AI IS ACTUALLY GOOD AT -->
+  <div class="section">
+    <div class="section-label">What to know first</div>
+    <h2>What AI is actually good at</h2>
+    <p>AI tools like ChatGPT, Claude, and others are not search engines and they are not magic. They are text tools. They are good at specific things and not good at others.</p>
+
+    <div class="highlight-box">
+      <strong>AI tends to work well for tasks that involve words, structure, or thinking through options.</strong>
+    </div>
+
+    <p>Here are examples of the kinds of tasks AI handles well:</p>
+
+    <div class="example-grid">
+      <div class="example-card">
+        <div class="example-card-label">Writing</div>
+        <div class="example-card-text">Drafting emails, summarising documents, rewriting something in a clearer way</div>
+      </div>
+      <div class="example-card">
+        <div class="example-card-label">Planning</div>
+        <div class="example-card-text">Breaking a project into steps, creating an agenda, thinking through options</div>
+      </div>
+      <div class="example-card">
+        <div class="example-card-label">Research support</div>
+        <div class="example-card-text">Getting a plain-English explanation of something, generating a list of questions to explore</div>
+      </div>
+      <div class="example-card">
+        <div class="example-card-label">Templates</div>
+        <div class="example-card-text">Creating a first draft of a recurring document, report, or message you write often</div>
+      </div>
+    </div>
+
+    <div class="caution-box">
+      <strong>Important:</strong> AI can be wrong. It can sound confident and still give you incorrect information. You should always check AI responses before acting on them — especially for facts, numbers, or anything that matters. You will learn how to do this in Level 3.
+    </div>
+  </div>
+
+  <!-- HOW TO FIND YOUR STARTING POINT -->
+  <div class="section">
+    <div class="section-label">Finding your task</div>
+    <h2>How to find your AI starting point</h2>
+    <p>Think about your typical work week. You are looking for a task that meets these three conditions:</p>
+
+    <ul class="check-list">
+      <li>It involves words — writing, reading, summarising, explaining, or organising information</li>
+      <li>You do it more than once — it is something that comes up regularly, not a one-off</li>
+      <li>It takes more time or energy than it should — it feels repetitive, slow, or draining</li>
+    </ul>
+
+    <div class="divider"></div>
+
+    <p>Here are some real examples from different types of work:</p>
+
+    <div class="example-grid">
+      <div class="example-card">
+        <div class="example-card-label">Example</div>
+        <div class="example-card-text">Writing follow-up emails after client meetings</div>
+      </div>
+      <div class="example-card">
+        <div class="example-card-label">Example</div>
+        <div class="example-card-text">Summarising long reports or documents before a meeting</div>
+      </div>
+      <div class="example-card">
+        <div class="example-card-label">Example</div>
+        <div class="example-card-text">Creating a weekly update or status report</div>
+      </div>
+      <div class="example-card">
+        <div class="example-card-label">Example</div>
+        <div class="example-card-text">Drafting responses to common customer or colleague questions</div>
+      </div>
+      <div class="example-card">
+        <div class="example-card-label">Example</div>
+        <div class="example-card-text">Researching a topic and pulling out the key points</div>
+      </div>
+      <div class="example-card">
+        <div class="example-card-label">Example</div>
+        <div class="example-card-text">Turning rough notes into a clear document or agenda</div>
+      </div>
+    </div>
+
+    <div class="highlight-box">
+      <strong>Tip:</strong> Do not try to pick the perfect task. Pick a real one. You can always change it later. The goal right now is to have something specific and personal to work with.
+    </div>
+  </div>
+
+  <!-- ACTIVITY -->
+  <div class="activity-section">
+    <div class="activity-label">Your Level 1 activity</div>
+    <h2>Find your starting point</h2>
+    <p>Use the steps below to identify your one AI starting task. Then fill in the activity form to capture it. This becomes your first course artifact — you will use it in every level that follows.</p>
+
+    <ol class="activity-steps">
+      <li class="activity-step">
+        <div class="activity-step-num">1</div>
+        <div class="activity-step-text"><strong>Think of 2–3 tasks</strong> from your real work week that involve words and happen regularly.</div>
+      </li>
+      <li class="activity-step">
+        <div class="activity-step-num">2</div>
+        <div class="activity-step-text"><strong>Pick the one</strong> that feels most repetitive or time-consuming.</div>
+      </li>
+      <li class="activity-step">
+        <div class="activity-step-num">3</div>
+        <div class="activity-step-text"><strong>Write it down</strong> in one clear sentence. Example: "I write follow-up emails after every client call and it takes me 20 minutes each time."</div>
+      </li>
+      <li class="activity-step">
+        <div class="activity-step-num">4</div>
+        <div class="activity-step-text"><strong>Submit it</strong> using the form below. Keep your answer — you will use it in Level 2.</div>
+      </li>
+    </ol>
+
+    <!-- TALLY FORM PLACEHOLDER -->
+    <div class="form-placeholder">
+      <div class="form-placeholder-icon">📋</div>
+      <div class="form-placeholder-text">The Level 1 activity form will appear here.<br>Check back shortly — it is being set up.</div>
+      <div class="form-placeholder-note">[TALLY LEVEL 1 FORM LINK — replace this placeholder when the form is built]</div>
+    </div>
+  </div>
+
+  <!-- NAVIGATION -->
+  <div class="nav-section">
+    <a href="https://aiforworkbootcamp.github.io/aiforwork/welcome.html" class="nav-back">← Back to Welcome</a>
+    <div>
+      <a href="[LEVEL 2 LINK]" class="nav-next">Level 2 — Build a Better Prompt →</a>
+      <div class="nav-next-note">Complete the activity above to continue</div>
+    </div>
+  </div>
+
+  <!-- SUPPORT -->
+  <div class="support-strip">
+    Got stuck on this level? <a href="[SUPPORT FORM LINK]">Use the support form</a>
+  </div>
+
+  <!-- PRIVACY -->
+  <div class="privacy-strip">
+    This is a beta project. Your responses, including any work examples or workflow you submit, will be reviewed by the course founder to improve the course and will not be shared outside this project.
+  </div>
+
+  <!-- FOUNDER NOTE — DELETE BEFORE GOING LIVE -->
+  <div class="founder-note">
+    <div class="founder-note-title">⚠ For Founder Use Only — Delete This Section Before Going Live</div>
+
+    <h3>How to upload this page to GitHub</h3>
+    <ol>
+      <li>Go to github.com and log in as aiforworkbootcamp.</li>
+      <li>Click on the aiforwork repository.</li>
+      <li>Click Add file → Upload files.</li>
+      <li>Upload this file (level1.html).</li>
+      <li>Click Commit changes.</li>
+      <li>Your live URL will be: https://aiforworkbootcamp.github.io/aiforwork/level1.html</li>
+    </ol>
+
+    <h3>How to link this page from Systeme.io</h3>
+    <ol>
+      <li>In your course, create a new lecture called: Level 1 — Find Your AI Starting Point.</li>
+      <li>Add a button element with the text: Open Level 1 →</li>
+      <li>Link the button to: https://aiforworkbootcamp.github.io/aiforwork/level1.html</li>
+      <li>Set the button to open in a new tab.</li>
+      <li>Save. Keep in draft mode until all levels are ready.</li>
+    </ol>
+
+    <h3>Three things to fill in before going live</h3>
+    <ol>
+      <li>Replace [TALLY LEVEL 1 FORM LINK] with the actual Tally form URL once the Level 1 activity form is built.</li>
+      <li>Replace [LEVEL 2 LINK] with https://aiforworkbootcamp.github.io/aiforwork/level2.html once Level 2 is built.</li>
+      <li>Replace [SUPPORT FORM LINK] with the actual Tally support form URL once that form is built.</li>
+    </ol>
+
+    <h3>Also update the Welcome Page</h3>
+    <ol>
+      <li>Open welcome.html in a text editor.</li>
+      <li>Find [LEVEL 1 LINK] and replace it with: https://aiforworkbootcamp.github.io/aiforwork/level1.html</li>
+      <li>Re-upload welcome.html to GitHub to replace the existing file.</li>
+    </ol>
+
+    <div class="warn">Do not share this page with beta participants until all placeholders are replaced and this section is deleted.</div>
+  </div>
+
+</div><!-- end page-wrap -->
+</body>
+</html>
